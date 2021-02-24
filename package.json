@@ -47,11 +47,11 @@
       "path": "cz-conventional-changelog",
       "types": {
         "feat": {
-          "description": "Um novo recurso",
-          "title": "Funcionalidades"
+          "description": "Adição de um novo recurso ",
+          "title": "Funcionalidade"
         },
         "fix": {
-          "description": "Errors Corrigidos",
+          "description": "Correção de erros no projeto",
           "title": "Correção"
         },
         "docs": {
@@ -85,6 +85,10 @@
         "chore": {
           "description": "Outras mudanças que não modificam os arquivos src ou de teste",
           "title": "Outro"
+        },
+        "revert": {
+          "description": "Reverter a um commit anterior",
+          "title": "Reverte"
         }
       }
     }
