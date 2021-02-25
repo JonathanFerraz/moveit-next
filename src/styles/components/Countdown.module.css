@@ -22,6 +22,7 @@
 
 .contdownContainer > div span {
   flex: 1;
+  box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.05);
 }
 
 .contdownContainer > div span:first-child {
@@ -50,9 +51,26 @@
   color: var(--white);
   font-size: 1.25rem;
   font-weight: 600;
-  transition: background 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
-.countdownButton:hover {
+.countdownButton:not(:disabled):hover {
   background: var(--blue-dark);
+}
+
+.countdownButtonActive {
+  background: var(--white);
+  color: var(--title)
+}
+
+.countdownButtonActive:not(:disabled):hover {
+  background: var(--red);
+  color: var(--white)
+}
+
+.countdownButton:disabled {
+  cursor: not-allowed;
+  background: var(--white);
+  border-bottom: 4px solid var(--green);
+  color: var(--text);
 }
