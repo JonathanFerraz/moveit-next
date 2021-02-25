@@ -1,9 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/Countdown.module.css';
 
+let countdownTimeout: NodeJS.Timeout;
+
 export function Countdown() {
-  const [time, setTime] = useState(1 * 60);
-  const [active, setAtive] = useState(false);
+  const { startNewChallenge } = useContext(ChallengesContext);
+
+  const [time, setTime] = useState(0.1 * 60);
+  const [isActive, setIsAtive] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -12,16 +18,26 @@ export function Countdown() {
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
   function startCountdown() {
-    setAtive(true);
+    setIsAtive(true);
+  }
+
+  function resetCountdown() {
+    clearTimeout(countdownTimeout);
+    setIsAtive(false);
+    setTime(0.1 * 60);
   }
 
   useEffect(() => {
-    if (active && time > 0) {
-      setTimeout(() => {
+    if (isActive && time > 0) {
+      countdownTimeout = setTimeout(() => {
         setTime(time - 1);
       }, 1000);
+    } else if (isActive && time === 0) {
+      setHasFinished(true);
+      setIsAtive(false);
+      startNewChallenge();
     }
-  }, [active, time]);
+  }, [isActive, time]);
 
   return (
     <>
@@ -36,9 +52,30 @@ export function Countdown() {
           <span>{secondRight}</span>
         </div>
       </div>
-      <button type={'button'} className={styles.countdownButton} onClick={startCountdown}>
-        Iniciar um ciclo
-      </button>
+
+      {hasFinished ? (
+        <button disabled className={styles.countdownButton}>
+          Ciclo encerrado
+          <img style={{ marginLeft: '1rem' }} src={'icons/success.svg'} alt="Sucesso" />
+        </button>
+      ) : (
+        <>
+          {isActive ? (
+            <button
+              type={'button'}
+              className={`${styles.countdownButton} ${styles.countdownButtonActive}`}
+              onClick={resetCountdown}>
+              Abandonar ciclo
+              <img style={{ marginLeft: '1rem' }} src={'icons/finished.svg'} alt="Encerrar" />
+            </button>
+          ) : (
+            <button type={'button'} className={styles.countdownButton} onClick={startCountdown}>
+              Iniciar um ciclo
+              <img style={{ marginLeft: '1rem', fill: '#fff' }} src={'icons/play.svg'} alt="Play" />
+            </button>
+          )}
+        </>
+      )}
     </>
   );
 }
