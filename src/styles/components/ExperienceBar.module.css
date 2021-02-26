@@ -17,12 +17,14 @@
 }
 
 .experienceBar > div > div {
+  transition: 1s ease-in-out;
   height: 4px;
   border-radius: 4px;
   background: var(--green);
 }
 
 span.currentExperience {
+  transition: 1s ease-in-out;
   position: absolute;
   top: 12px;
   transform: translateX(-50%);
