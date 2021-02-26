@@ -29,9 +29,9 @@ module.exports = {
   ],
   plugins: ['simple-import-sort'],
   rules: {
-    'prettier/prettier': [
-      'error',
-      {},
+    'prettier/prettier': ['error', {
+      'endOfLine': 'auto'
+    },
       {
         usePrettierrc: true,
       },
